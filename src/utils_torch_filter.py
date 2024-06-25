@@ -60,6 +60,10 @@ class MesNet(torch.nn.Module):
                                    n_layers=4,
                                    n_output=2,
                                    dropout_prob=0.1)
+            maske = np.ones((6, 6000))
+            maskd = np.ones((6, 6000))
+            self.mask_encoder = torch.tensor(maske).to(device)
+            self.mask_decoder = torch.tensor(maskd).to(device)
             # print("63 utils torch filter")
             self.transformer = Transformer(self.encoder, self.decoder)
             self.cov_net = self.transformer
@@ -80,7 +84,9 @@ class MesNet(torch.nn.Module):
             self.cov_lin[0].weight.data[:] /= 100
 
         def forward(self, u, iekf):
-            y_cov = self.cov_net(u, u, enc_mask=True, dec_mask=True)
+
+            # y_cov = self.cov_net(u, u, enc_mask=True, dec_mask=True)
+            y_cov = self.cov_net(u, u, self.mask_encoder, self.mask_decoder)
             # y_cov = self.cov_net(u).transpose(0, 2).squeeze() 
             z_cov = self.cov_lin(y_cov)
             z_cov_net = self.beta_measurement.unsqueeze(0)*z_cov
