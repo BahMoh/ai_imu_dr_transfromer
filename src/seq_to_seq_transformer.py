@@ -197,7 +197,7 @@ class Encoder(nn.Module):
         # print(x.dtype)
         x = x.float()
         # x = self.embedding(x)
-        print(x.shape. "seq_to_seq_transformer.py, line 201, in forward")
+        print(x.shape, "seq_to_seq_transformer.py, line 201, in forward")
         x = self.input_embedding(x)
         # print(x.shape, "after input embedding")
         x = self.pos_encoding(x)
