@@ -270,7 +270,7 @@ class Transformer(nn.Module):
 
 
 import sys
-if __name__ == __main__:
+if __name__ == "__main__":
     encoder = Encoder(max_len=512,
                  d_k=16,
                  d_model=64,
