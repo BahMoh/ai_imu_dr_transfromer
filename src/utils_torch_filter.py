@@ -55,7 +55,7 @@ class MesNet(torch.nn.Module):
             print("55 utils torch filter")
             self.decoder = Decoder(max_len=2048,
                                    d_k=6,
-                                   d_model=16,
+                                   d_model=32,
                                    n_heads=8,
                                    n_layers=4,
                                    n_output=2,
