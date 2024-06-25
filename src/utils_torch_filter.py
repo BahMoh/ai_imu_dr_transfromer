@@ -48,7 +48,7 @@ class MesNet(torch.nn.Module):
                 
             self.encoder = Encoder(max_len=1024,
                                    d_k=6,
-                                   d_model=16,
+                                   d_model=32,
                                    n_heads=8,
                                    n_layers=4,
                                    dropout_prob=0.1)
