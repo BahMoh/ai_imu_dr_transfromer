@@ -460,10 +460,10 @@ class KITTIArgs():
         current_dir = os.getcwd()
         parent_dir = os.path.dirname(current_dir)
 
-        path_data_save = "/content/ai-imu-dr/data"
+        path_data_save = "/content/ai_imu_dr_transformer/data"
         # path_results = "/content/ai-imu-dr/results"
-        path_results = "/content/ai-imu-dr/data"
-        path_temp = "/content/ai-imu-dr/temp"
+        path_results = "/content/ai_imu_dr_transformer/data"
+        path_temp = "/content/ai_imu_dr_transformer/temp"
 
         epochs = 400
         seq_dim = 6000
