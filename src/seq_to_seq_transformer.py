@@ -162,6 +162,7 @@ class PositionalEncoding(nn.Module):
     def forward(self, x):
         # x.shape: N x T x D
         print(f"x.shape {x.shape}, pe.shape {self.pe.shape}, 160 seq2seq")
+        print(f"self.pe[:, :x.size(1), :] {self.pe[:, :x.size(1), :].shape} 160 seq2seq")
         x = x + self.pe[:, :x.size(1), :]
         return self.dropout(x )
 
