@@ -462,7 +462,7 @@ class TORCHIEKF(torch.nn.Module, NUMPYIEKF):
     def forward_nets(self, u):
         u_n = self.normalize_u(u).t().unsqueeze(0)
         u_n = u_n[:, :6]
-        measurements_covs = self.mes_net(u_n, self)
+        measurements_covs = self.mes_net(u_n.transpose(0, 1), self)
         return measurements_covs
 
     def normalize_u(self, u):
