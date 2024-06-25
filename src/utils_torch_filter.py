@@ -46,14 +46,14 @@ class MesNet(torch.nn.Module):
             self.tanh = torch.nn.Tanh()
 
                 
-            self.encoder = Encoder(max_len=50000,
+            self.encoder = Encoder(max_len=55000,
                                    d_k=6,
                                    d_model=64,
                                    n_heads=8,
                                    n_layers=4,
                                    dropout_prob=0.1)
 
-            self.decoder = Decoder(max_len=50000,
+            self.decoder = Decoder(max_len=55000,
                                    d_k=6,
                                    d_model=64,
                                    n_heads=8,
