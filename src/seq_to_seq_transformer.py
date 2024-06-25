@@ -164,6 +164,7 @@ class PositionalEncoding(nn.Module):
 class Encoder(nn.Module):
     def __init__(self,
                 #  vocab_size,
+                 # input_dim,
                  max_len,
                  d_k,
                  d_model,
@@ -216,6 +217,7 @@ class Encoder(nn.Module):
 class Decoder(nn.Module):
     def __init__(self,
                 # vocab_size,
+                # input_dim,
                 max_len,
                 d_k,
                 d_model,
