@@ -63,8 +63,8 @@ class MultiHeadAttention(nn.Module):
         # (N, h, T, d_k) x (N, h, d_k, T) -> (N, h, T, T)
         attn_scores = q @ k.transpose(-2, -1) / math.sqrt(self.d_k)
         if pad_mask is not None:
+            print(type(pad_mask))
             attn_scores = attn_scores.masked_fill(
-                print(type(pad_mask))
                 pad_mask[:, None, None, :] == 0, float("-inf"))
 
         if self.causal:
