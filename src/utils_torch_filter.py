@@ -52,7 +52,7 @@ class MesNet(torch.nn.Module):
                                    n_heads=8,
                                    n_layers=4,
                                    dropout_prob=0.1)
-            print("55 utils torch filter")
+            # print("55 utils torch filter")
             self.decoder = Decoder(max_len=6000,
                                    d_k=6,
                                    d_model=32,
@@ -60,7 +60,7 @@ class MesNet(torch.nn.Module):
                                    n_layers=4,
                                    n_output=2,
                                    dropout_prob=0.1)
-            print("63 utils torch filter")
+            # print("63 utils torch filter")
             self.transformer = Transformer(self.encoder, self.decoder)
             self.cov_net = self.transformer
             # self.cov_net = torch.nn.Sequential(torch.nn.Conv1d(6, 32, 5),
