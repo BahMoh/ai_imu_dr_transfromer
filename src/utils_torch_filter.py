@@ -46,20 +46,21 @@ class MesNet(torch.nn.Module):
             self.tanh = torch.nn.Tanh()
 
                 
-            self.encoder = Encoder(max_len=55000,
+            self.encoder = Encoder(max_len=2048,
                                    d_k=6,
-                                   d_model=64,
+                                   d_model=16,
                                    n_heads=8,
                                    n_layers=4,
                                    dropout_prob=0.1)
-
-            self.decoder = Decoder(max_len=55000,
+            print("55 utils torch filter")
+            self.decoder = Decoder(max_len=2048,
                                    d_k=6,
-                                   d_model=64,
+                                   d_model=16,
                                    n_heads=8,
                                    n_layers=4,
                                    n_output=2,
                                    dropout_prob=0.1)
+            print("63 utils torch filter")
             self.transformer = Transformer(self.encoder, self.decoder)
             self.cov_net = self.transformer
             # self.cov_net = torch.nn.Sequential(torch.nn.Conv1d(6, 32, 5),
