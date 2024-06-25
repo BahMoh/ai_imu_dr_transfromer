@@ -180,7 +180,7 @@ class Encoder(nn.Module):
         # encodings for sequences up to this maximum length. The positional
         # encoding tensor is of size (1, max_len, d_model), allowing the model
         # to handle sequences of any length up to max_len.
-        self.input_embedding = nn.Linear(1, d_model)
+        self.input_embedding = nn.Linear(6, d_model)
         self.pos_encoding = PositionalEncoding(d_model, max_len, dropout_prob)
         transformer_blocks = [
             EncoderBlock(
@@ -230,7 +230,7 @@ class Decoder(nn.Module):
         # self.embedding = nn.Embedding(vocab_size, d_model)
 
         #input embedding
-        self.input_embedding = nn.Linear(1, d_model)
+        self.input_embedding = nn.Linear(6, d_model)
         self.pos_encoding = PositionalEncoding(d_model, max_len, dropout_prob)
         transformer_blocks = [
             DecoderBlock(
