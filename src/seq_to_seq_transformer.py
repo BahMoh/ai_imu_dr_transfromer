@@ -11,6 +11,9 @@ import matplotlib.pyplot as plt
 # We had two different MHA layers
 # Encoder doesn't need a causal mask
 # Decoder needs that
+
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
 class MultiHeadAttention(nn.Module):
     def __init__(self, d_k, d_model, n_heads, max_len, causal=False):
         super().__init__()
@@ -299,4 +302,3 @@ if __name__ == "__main__":
     print(f"Model size: {model_size / 1e6:.2f} Mb")
 
 
-# device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
