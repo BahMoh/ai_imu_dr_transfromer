@@ -109,7 +109,8 @@ class EncoderBlock(nn.Module):
         self.dropout = nn.Dropout(p=dropout_prob)
 
     def forward(self, x, mask=None):
-        x = self.ln1(x + self.mha(x, x, x, mask))
+        mha_output = self.mha(x, x, x, mask)
+        x = self.ln1(x.view(mha_output.shape[0], mha_output.shape[1], mha_output.shape[2]) + mha_output)
         x = self.ln2(x + self.ann(x))
         x = self.dropout(x)
         return x
