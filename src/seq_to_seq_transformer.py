@@ -23,6 +23,7 @@ class MultiHeadAttention(nn.Module):
 
         self.key = nn.Linear(d_model, d_k * n_heads)
         self.query = nn.Linear(d_model, d_k * n_heads)
+        self.query.to(device)
         self.value = nn.Linear(d_model, d_k * n_heads)
 
         # final linear layer
