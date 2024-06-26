@@ -64,7 +64,10 @@ class MesNet(torch.nn.Module):
                                    n_output=2,
                                    dropout_prob=0.1)
             maske = np.ones((6, 6000))
+            maske[:, 3000:] = 0
             maskd = np.ones((6, 6000))
+            maskd[:, 3000:] = 0
+
             self.mask_encoder = torch.tensor(maske).to(device)
             self.mask_decoder = torch.tensor(maskd).to(device)
             # print("63 utils torch filter")

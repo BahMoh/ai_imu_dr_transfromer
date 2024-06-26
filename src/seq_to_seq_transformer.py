@@ -210,7 +210,7 @@ class Encoder(nn.Module):
         # print(x.shape, "after input embedding")
         x = self.pos_encoding(x)
         for block in self.transformer_blocks:
-            x = block(x, mask)
+            x = block(x, mask.to(device))
 
         # many-to-one (x has the shep N x T x D)
         # This is optional, assuming we have text classification
