@@ -20,7 +20,7 @@ lr_mesnet = {'cov_net': 1e-4,
 weight_decay_mesnet = {'cov_net': 1e-8,
     'cov_lin': 1e-8,
     }
-
+device = "cuda" if torch.cuda.is_available() else "cpu"
 
 def compute_delta_p(Rot, p):
     list_rpe = [[], [], []]  # [idx_0, idx_end, pose_delta_p]
