@@ -83,8 +83,9 @@ class MultiHeadAttention(nn.Module):
 
         # reshape it back before final linear layer
         A = A.transpose(1, 2) # (N, T, h, d_k)
-        A = A.contiguous().view(N, T_output, self.d_k * self.n_heads) # (N, T, h*d_k)
-
+        ################################################################# Attention ##################################
+        A = A.contiguous().view(N, T_output * 6, self.d_k * self.n_heads) # (N, T, h*d_k)
+        ##############################################################################################################
         # projection
         return self.fc(A) # (N, T, d_model)
 
