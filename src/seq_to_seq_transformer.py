@@ -23,7 +23,6 @@ class MultiHeadAttention(nn.Module):
 
         self.key = nn.Linear(d_model, d_k * n_heads)
         self.query = nn.Linear(d_model, d_k * n_heads)
-        self.query.to(device)
         self.value = nn.Linear(d_model, d_k * n_heads)
 
         # final linear layer
@@ -40,6 +39,8 @@ class MultiHeadAttention(nn.Module):
                 "causal_mask",
                 cm.view(1, 1, max_len, max_len)
             )
+
+        self.to(device)
 
     # q, k, v passed as the arguments of the below method are the sane as x input
     def forward(self, q, k, v, pad_mask=None):
@@ -97,6 +98,7 @@ class EncoderBlock(nn.Module):
         self.ln2 = nn.LayerNorm(d_model)
         # We don't need casual mask here
         self.mha = MultiHeadAttention(d_k, d_model, n_heads, max_len, causal=False)
+        # self.mha.to(device)
         self.ann = nn.Sequential(
             nn.Linear(d_model, d_model * 4),
             nn.GELU(),
@@ -124,6 +126,8 @@ class DecoderBlock(nn.Module):
         # One is masked one is not!
         self.mha1 = MultiHeadAttention(d_k, d_model, n_heads, max_len, causal=True)
         self.mha2 = MultiHeadAttention(d_k, d_model, n_heads, max_len, causal=False)
+        # self.mha1.to(device)
+        # self.mha2.to(device)
         self.ann = nn.Sequential(
             nn.Linear(d_model, d_model * 4),
             nn.GELU(),
