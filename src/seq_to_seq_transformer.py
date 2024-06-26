@@ -65,7 +65,6 @@ class MultiHeadAttention(nn.Module):
         # Compute attention score
         # (N, h, T, d_k) x (N, h, d_k, T) -> (N, h, T, T)
         attn_scores = q @ k.transpose(-2, -1) / math.sqrt(self.d_k)
-        attn_scores.to(device)
         if pad_mask is not None:
             attn_scores = attn_scores.masked_fill(
                 pad_mask[:, None, None, :] == 0, float("-inf"))
@@ -213,7 +212,7 @@ class Encoder(nn.Module):
         # print(x.shape, "after input embedding")
         x = self.pos_encoding(x)
         for block in self.transformer_blocks:
-            x = block(x, mask.to(device))
+            x = block(x.to(device), mask.to(device))
 
         # many-to-one (x has the shep N x T x D)
         # This is optional, assuming we have text classification
