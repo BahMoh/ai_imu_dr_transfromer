@@ -8,6 +8,9 @@ from utils_numpy_filter import NUMPYIEKF
 from utils import prepare_data
 from seq_to_seq_transformer import Encoder, Decoder, Transformer
 
+
+
+device = "cuda" if torch.cuda.is_available() else "cpu"
 class InitProcessCovNet(torch.nn.Module):
 
         def __init__(self):
