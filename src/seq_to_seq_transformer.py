@@ -269,7 +269,7 @@ class Decoder(nn.Module):
 
     def forward(self, enc_output, dec_input, enc_mask=None, dec_mask=None):
         # x = self.embedding(dec_input)
-        dec_input = dec_input.view(dec_input.shape[0], dec_input.shape[1], 1)
+        # dec_input = dec_input.view(dec_input.shape[0], dec_input.shape[1], 1)
         dec_input = dec_input.float()
         x = self.input_embedding(dec_input)
         x = self.pos_encoding(x)
