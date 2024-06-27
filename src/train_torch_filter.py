@@ -72,6 +72,7 @@ def train_filter(args, dataset):
 
 def prepare_filter(args, dataset):
     iekf = TORCHIEKF()
+    iekf.to(device)
 
     # set dataset parameter
     iekf.filter_parameters = args.parameter_class()
