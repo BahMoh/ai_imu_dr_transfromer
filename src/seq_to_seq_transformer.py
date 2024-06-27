@@ -109,9 +109,8 @@ class EncoderBlock(nn.Module):
         self.dropout = nn.Dropout(p=dropout_prob)
 
     def forward(self, x, mask=None):
-        print(x.shape, "x.shape 112 seq2seq")
-        mha_output = self.mha(x, x, x, mask)
-        print(mha_output.shape, "mha_output.shape 112 seq2seq")
+        mha_output = self.mha(x, x, x, mask).to(device)
+        x.to(device)
         x = self.ln1(x.view(mha_output.shape[0], mha_output.shape[1], mha_output.shape[2]) + mha_output)
         x = self.ln2(x + self.ann(x))
         x = self.dropout(x)
