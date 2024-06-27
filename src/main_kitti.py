@@ -460,10 +460,10 @@ class KITTIArgs():
         current_dir = os.getcwd()
         parent_dir = os.path.dirname(current_dir)
 
-        path_data_save = "/kaggle/working/ai_imu_dr_transfromer/data"
+        path_data_save = "/kaggle/working/ai_imu_dr_transformer/data"
         # path_results = "/content/ai-imu-dr/results"
-        path_results = "/kaggle/working/ai_imu_dr_transfromer/data"
-        path_temp = "/kaggle/working/ai_imu_dr_transfromer/temp"
+        path_results = "/kaggle/working/ai_imu_dr_transformer/data"
+        path_temp = "/kaggle/working/ai_imu_dr_transformer/temp"
 
         epochs = 400
         seq_dim = 6000
