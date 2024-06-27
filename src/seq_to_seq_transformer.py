@@ -218,7 +218,7 @@ class Encoder(nn.Module):
         # x = self.embedding(x)
         # print(x.shape, "seq_to_seq_transformer.py, line 201, in forward")
         x = x.transpose(1,2)
-        x.to(device)
+        x = x.to(device)
         # print(x.device)
         # print(self.input_embedding.weight.device)
         x = self.input_embedding(x)
