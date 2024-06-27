@@ -26,7 +26,7 @@ class MultiHeadAttention(nn.Module):
         self.value = nn.Linear(d_model, d_k * n_heads)
 
         # final linear layer
-        self.fc = nn.Linear(d_k * n_heads, d_model)
+        self.fc = nn.Linear(d_k * n_heads  * 6, d_model)
 
         # causal mask
         # make it so that diagonal is zero too!!!
@@ -84,7 +84,7 @@ class MultiHeadAttention(nn.Module):
         # reshape it back before final linear layer
         A = A.transpose(1, 2) # (N, T, h, d_k)
         ################################################################# Attention ##################################
-        A = A.contiguous().view(N, T_output * 6, self.d_k * self.n_heads) # (N, T, h*d_k)
+        A = A.contiguous().view(N, T_output, self.d_k * self.n_heads * 6) # (N, T, 6 * h*d_k)
         ##############################################################################################################
         # projection
         return self.fc(A) # (N, T, d_model)
