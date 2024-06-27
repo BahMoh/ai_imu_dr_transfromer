@@ -271,6 +271,7 @@ class Decoder(nn.Module):
         # x = self.embedding(dec_input)
         # dec_input = dec_input.view(dec_input.shape[0], dec_input.shape[1], 1)
         dec_input = dec_input.float()
+        dec_input.to(device)
         x = self.input_embedding(dec_input)
         x = self.pos_encoding(x)
         for block in self.transformer_blocks:
