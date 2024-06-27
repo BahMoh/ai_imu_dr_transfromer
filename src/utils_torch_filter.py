@@ -123,6 +123,7 @@ class TORCHIEKF(torch.nn.Module, NUMPYIEKF):
         self.u_std = None
         self.initprocesscov_net = InitProcessCovNet()
         self.mes_net = MesNet()
+        self.mes_net.to(device)
         self.cov0_measurement = None
 
         # modified parameters
