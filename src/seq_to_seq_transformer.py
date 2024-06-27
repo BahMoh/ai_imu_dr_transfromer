@@ -70,7 +70,7 @@ class MultiHeadAttention(nn.Module):
         if pad_mask is not None:
             attn_scores = attn_scores.masked_fill(
                 pad_mask[:, None, None, :] == 0, float("-inf"))
-
+        print(self.causal_mask.shape)
         if self.causal:
             attn_scores = attn_scores.masked_fill(
                 # third index goes up to T_output, the fourth index goes to T_input
@@ -275,7 +275,7 @@ class Decoder(nn.Module):
         dec_input = dec_input.to(device)
 
 
-        print(dec_input.shape)
+        # print(dec_input.shape)
         dec_input = dec_input.transpose(1,2)
         x = self.input_embedding(dec_input)
         x = self.pos_encoding(x)
