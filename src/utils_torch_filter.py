@@ -32,12 +32,12 @@ class InitProcessCovNet(torch.nn.Module):
             return
 
         def init_cov(self, iekf):
-            alpha = self.factor_initial_covariance(torch.ones(1).double()).squeeze()
+            alpha = self.factor_initial_covariance(torch.ones(1, device=device).double()).squeeze()
             beta = 10**(self.tanh(alpha))
             return beta
 
         def init_processcov(self, iekf):
-            alpha = self.factor_process_covariance(torch.ones(1).double())
+            alpha = self.factor_process_covariance(torch.ones(1, device=device).double())
             beta = 10**(self.tanh(alpha))
             return beta
 
@@ -45,7 +45,7 @@ class InitProcessCovNet(torch.nn.Module):
 class MesNet(torch.nn.Module):
         def __init__(self):
             super(MesNet, self).__init__()
-            beta_measurement = 3*torch.ones(2).double()
+            beta_measurement = 3*torch.ones(2, device=device).double()
             self.beta_measurement = beta_measurement.to(device)
             self.tanh = torch.nn.Tanh()
 
@@ -69,8 +69,8 @@ class MesNet(torch.nn.Module):
             maskd = np.ones((6, 6000))
             maskd[:, 3000:] = 0
 
-            self.mask_encoder = torch.tensor(maske).to(device)
-            self.mask_decoder = torch.tensor(maskd).to(device)
+            self.mask_encoder = torch.tensor(maske, device=device)
+            self.mask_decoder = torch.tensor(maskd, device=device)
             # print("63 utils torch filter")
             self.transformer = Transformer(self.encoder, self.decoder)
             self.cov_net = self.transformer
@@ -89,7 +89,7 @@ class MesNet(torch.nn.Module):
                                               ).double()
             self.cov_lin[0].bias.data[:] /= 100
             self.cov_lin[0].weight.data[:] /= 100
-            self.to(device)
+            # self.to(device)
         def forward(self, u, iekf):
             # y_cov = self.cov_net(u, u, enc_mask=True, dec_mask=True)
             y_cov = self.cov_net(u, u, self.mask_encoder, self.mask_decoder)
@@ -114,11 +114,11 @@ class MesNet(torch.nn.Module):
 
 
 class TORCHIEKF(torch.nn.Module, NUMPYIEKF):
-    Id1 = torch.eye(1).double()
-    Id2 = torch.eye(2).double()
-    Id3 = torch.eye(3).double()
-    Id6 = torch.eye(6).double()
-    IdP = torch.eye(21).double()
+    Id1 = torch.eye(1, device=device).double()
+    Id2 = torch.eye(2, device=device).double()
+    Id3 = torch.eye(3, device=device).double()
+    Id6 = torch.eye(6, device=device).double()
+    IdP = torch.eye(21, device=device).double()
 
     def __init__(self, parameter_class=None):
         torch.nn.Module.__init__(self)
@@ -127,13 +127,12 @@ class TORCHIEKF(torch.nn.Module, NUMPYIEKF):
         # mean and standard deviation of parameters for normalizing inputs
         self.u_loc = None
         self.u_std = None
-        self.initprocesscov_net = InitProcessCovNet()
-        self.mes_net = MesNet()
-        self.mes_net.to(device)
+        self.initprocesscov_net = InitProcessCovNet().to(device)
+        self.mes_net = MesNet().to(device)
         self.cov0_measurement = None
 
         # modified parameters
-        self.IdP = torch.eye(self.P_dim).double()
+        self.IdP = torch.eye(self.P_dim, device=device).double()
 
         if parameter_class is not None:
             self.filter_parameters = parameter_class()
@@ -151,9 +150,9 @@ class TORCHIEKF(torch.nn.Module, NUMPYIEKF):
                                            self.cov_b_omega, self.cov_b_omega, self.cov_b_omega,
                                            self.cov_b_acc, self.cov_b_acc, self.cov_b_acc,
                                            self.cov_Rot_c_i, self.cov_Rot_c_i, self.cov_Rot_c_i,
-                                           self.cov_t_c_i, self.cov_t_c_i, self.cov_t_c_i])
+                                           self.cov_t_c_i, self.cov_t_c_i, self.cov_t_c_i], device=device).double()
                             ).double()
-        self.cov0_measurement = torch.Tensor([self.cov_lat, self.cov_up]).double()
+        self.cov0_measurement = torch.Tensor([self.cov_lat, self.cov_up], device=device).double()
 
     def run(self, t, u,  measurements_covs, v_mes, p_mes, N, ang0):
 
@@ -181,7 +180,7 @@ class TORCHIEKF(torch.nn.Module, NUMPYIEKF):
 
     def init_covariance(self):
         beta = self.initprocesscov_net.init_cov(self)
-        P = torch.zeros(self.P_dim, self.P_dim).double()
+        P = torch.zeros(self.P_dim, self.P_dim, device=device).double()
         P[:2, :2] = self.cov_Rot0*beta[0]*self.Id2  # no yaw error
         P[3:5, 3:5] = self.cov_v0*beta[1]*self.Id2
         P[9:12, 9:12] = self.cov_b_omega0*beta[2]*self.Id3
@@ -192,14 +191,14 @@ class TORCHIEKF(torch.nn.Module, NUMPYIEKF):
 
 
     def init_saved_state(self, dt, N, ang0):
-        Rot = dt.new_zeros(N, 3, 3)
-        v = dt.new_zeros(N, 3)
-        p = dt.new_zeros(N, 3)
-        b_omega = dt.new_zeros(N, 3)
-        b_acc = dt.new_zeros(N, 3)
-        Rot_c_i = dt.new_zeros(N, 3, 3)
-        t_c_i = dt.new_zeros(N, 3)
-        Rot_c_i[0] = torch.eye(3).double()
+        Rot = dt.new_zeros(N, 3, 3, device=device)
+        v = dt.new_zeros(N, 3, device=device)
+        p = dt.new_zeros(N, 3), device=device
+        b_omega = dt.new_zeros(N, 3, device=device)
+        b_acc = dt.new_zeros(N, 3, device=device)
+        Rot_c_i = dt.new_zeros(N, 3, 3, device=device)
+        t_c_i = dt.new_zeros(N, 3, device=device)
+        Rot_c_i[0] = torch.eye(3, device=device).double()
         return Rot, v, p, b_omega, b_acc, Rot_c_i, t_c_i
 
     def propagate(self, Rot_prev, v_prev, p_prev, b_omega_prev, b_acc_prev, Rot_c_i_prev, t_c_i_prev,
