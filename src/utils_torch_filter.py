@@ -45,7 +45,8 @@ class InitProcessCovNet(torch.nn.Module):
 class MesNet(torch.nn.Module):
         def __init__(self):
             super(MesNet, self).__init__()
-            self.beta_measurement = 3*torch.ones(2).double()
+            beta_measurement = 3*torch.ones(2).double()
+            self.beta_measurement = beta_measurement.to(device)
             self.tanh = torch.nn.Tanh()
 
                 
@@ -99,7 +100,6 @@ class MesNet(torch.nn.Module):
 
             z_cov = self.cov_lin(y_cov.double())
             z_cov = z_cov.to(device)
-            self.beta_measurement.to(device)
             z_cov_net = self.beta_measurement.unsqueeze(0)*z_cov
             measurements_covs = (iekf.cov0_measurement.unsqueeze(0) * (10**z_cov_net))
             # print(f"u {u.shape}")                                    # u torch.Size([1, 6, 6000])
