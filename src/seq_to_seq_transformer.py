@@ -165,16 +165,16 @@ class PositionalEncoding(nn.Module):
         pe = torch.zeros(1, max_len, d_model)
         pe[0, :, 0::2] = torch.sin(position * div_term)
         pe[0, :, 1::2] = torch.cos(position * div_term)
-        print(f"position {position.shape}")
-        print(f"exp_term {exp_term.shape}")
-        print(f"div_term {div_term.shape}")
-        print(f"pe {pe.shape}")
+        # print(f"position {position.shape}")
+        # print(f"exp_term {exp_term.shape}")
+        # print(f"div_term {div_term.shape}")
+        # print(f"pe {pe.shape}")
         self.register_buffer("pe", pe)
 
     def forward(self, x):
         # x.shape: N x T x D
-        print(f"x.shape {x.shape}, pe.shape {self.pe.shape}, 160 seq2seq")
-        print(f"self.pe[:, :x.size(1), :] {self.pe[:, :x.size(1), :].shape} 160 seq2seq")
+        # print(f"x.shape {x.shape}, pe.shape {self.pe.shape}, 160 seq2seq")
+        # print(f"self.pe[:, :x.size(1), :] {self.pe[:, :x.size(1), :].shape} 160 seq2seq")
         x = x + self.pe[:, :x.size(1), :]
         return self.dropout(x )
 
