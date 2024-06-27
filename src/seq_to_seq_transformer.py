@@ -254,6 +254,7 @@ class Decoder(nn.Module):
 
         #input embedding
         self.input_embedding = nn.Linear(6, d_model)
+        self.input_embedding.to(device)
         self.pos_encoding = PositionalEncoding(d_model, max_len, dropout_prob)
         transformer_blocks = [
             DecoderBlock(
