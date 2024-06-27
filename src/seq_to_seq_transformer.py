@@ -72,6 +72,7 @@ class MultiHeadAttention(nn.Module):
                 pad_mask[:, None, None, :] == 0, float("-inf"))
         # print(causal_mask.shape)
         if self.causal:
+            print(T_output, T_input)
             attn_scores = attn_scores.masked_fill(
                 # third index goes up to T_output, the fourth index goes to T_input
                 self.causal_mask[:, :, T_output, :T_input] == 0, float("-inf"))
