@@ -49,18 +49,18 @@ class MesNet(torch.nn.Module):
             self.tanh = torch.nn.Tanh()
 
                 
-            self.encoder = Encoder(max_len=256,
+            self.encoder = Encoder(max_len=6000,
                                    d_k=6,
-                                   d_model=32,
-                                   n_heads=8,
-                                   n_layers=4,
+                                   d_model=8,
+                                   n_heads=3,
+                                   n_layers=3,
                                    dropout_prob=0.1)
             # print("55 utils torch filter")
-            self.decoder = Decoder(max_len=256,
+            self.decoder = Decoder(max_len=6000,
                                    d_k=6,
-                                   d_model=32,
-                                   n_heads=8,
-                                   n_layers=4,
+                                   d_model=8,
+                                   n_heads=3,
+                                   n_layers=3,
                                    n_output=2,
                                    dropout_prob=0.1)
             maske = np.ones((6, 6000))
