@@ -152,7 +152,7 @@ class TORCHIEKF(torch.nn.Module, NUMPYIEKF):
                                            self.cov_Rot_c_i, self.cov_Rot_c_i, self.cov_Rot_c_i,
                                            self.cov_t_c_i, self.cov_t_c_i, self.cov_t_c_i], device="cpu")\
                             ).double()
-        self.cov0_measurement = torch.Tensor([self.cov_lat, self.cov_up], device=device).double()
+        self.cov0_measurement = torch.Tensor([self.cov_lat, self.cov_up], device="cpu").double()
 
     def run(self, t, u,  measurements_covs, v_mes, p_mes, N, ang0):
 
