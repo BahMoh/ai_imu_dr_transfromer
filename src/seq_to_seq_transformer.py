@@ -209,7 +209,7 @@ class Encoder(nn.Module):
         self.transformer_blocks = nn.Sequential(*transformer_blocks)
         self.ln = nn.LayerNorm(d_model)
         # self.fc = nn.Linear(d_model, n_classes)
-        self.to(device)
+        # self.to(device)
     def forward(self, x, mask=None):
         # print(x.shape, "x raw")
         x = x.view(x.shape[0], x.shape[1], -1)
@@ -218,7 +218,7 @@ class Encoder(nn.Module):
         # x = self.embedding(x)
         # print(x.shape, "seq_to_seq_transformer.py, line 201, in forward")
         x = x.transpose(1,2)
-
+        x.to("cpu")
         x = self.input_embedding(x)
         # print(x.shape, "after input embedding")
         x = self.pos_encoding(x)
