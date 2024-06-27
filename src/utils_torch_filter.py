@@ -50,17 +50,17 @@ class MesNet(torch.nn.Module):
 
                 
             self.encoder = Encoder(max_len=6000,
-                                   d_k=6,
-                                   d_model=8,
+                                   d_k=2,
+                                   d_model=4,
                                    n_heads=3,
-                                   n_layers=3,
+                                   n_layers=2,
                                    dropout_prob=0.1)
             # print("55 utils torch filter")
             self.decoder = Decoder(max_len=6000,
-                                   d_k=6,
-                                   d_model=8,
-                                   n_heads=3,
-                                   n_layers=3,
+                                   d_k=2,
+                                   d_model=4,
+                                   n_heads=2,
+                                   n_layers=2,
                                    n_output=2,
                                    dropout_prob=0.1)
             maske = np.ones((6, 6000))
