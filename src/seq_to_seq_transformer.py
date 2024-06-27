@@ -75,7 +75,7 @@ class MultiHeadAttention(nn.Module):
             print(T_output, T_input)
             attn_scores = attn_scores.masked_fill(
                 # third index goes up to T_output, the fourth index goes to T_input
-                self.causal_mask[:, :, T_output, :T_input] == 0, float("-inf"))
+                self.causal_mask[:, :, T_output-1, :T_input] == 0, float("-inf"))
         attn_weights = F.softmax(attn_scores, dim = -1)
 
         # compute attention-weighted values
