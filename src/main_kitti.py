@@ -18,6 +18,7 @@ from utils import prepare_data
 from train_torch_filter import train_filter
 from utils_plot import results_filter
 
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 def launch(args):
     if args.read_data:
@@ -418,6 +419,7 @@ class KITTIDataset(BaseDataset):
 def test_filter(args, dataset):
     iekf = IEKF()
     torch_iekf = TORCHIEKF()
+    torch_iekf.to(device)
 
     # put Kitti parameters
     iekf.filter_parameters = KITTIParameters()
