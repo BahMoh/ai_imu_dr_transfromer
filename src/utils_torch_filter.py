@@ -61,7 +61,7 @@ class MesNet(torch.nn.Module):
                                    d_model=4,
                                    n_heads=2,
                                    n_layers=2,
-                                   n_output=2,
+                                   n_output=32,
                                    dropout_prob=0.1)
             maske = np.ones((6, 6000))
             maske[:, 3000:] = 0
