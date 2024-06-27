@@ -193,7 +193,7 @@ class TORCHIEKF(torch.nn.Module, NUMPYIEKF):
     def init_saved_state(self, dt, N, ang0):
         Rot = dt.new_zeros(N, 3, 3, device=device)
         v = dt.new_zeros(N, 3, device=device)
-        p = dt.new_zeros(N, 3), device=device
+        p = dt.new_zeros(N, 3, device=device)
         b_omega = dt.new_zeros(N, 3, device=device)
         b_acc = dt.new_zeros(N, 3, device=device)
         Rot_c_i = dt.new_zeros(N, 3, 3, device=device)
